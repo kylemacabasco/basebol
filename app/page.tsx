@@ -2,9 +2,45 @@
 
 import { useState } from "react";
 import { pitchingStats } from "./data/pitchingStats";
+import { hittingStats } from "./data/hittingStats";
+import { defensiveStats } from "./data/defensiveStats";
+import type { StatItem } from "./data/pitchingStats";
+
+type CategoryType = "pitching" | "hitting" | "defensive";
+
+interface Category {
+  id: CategoryType;
+  label: string;
+  description: string;
+  stats: StatItem[];
+}
+
+const categories: Category[] = [
+  {
+    id: "pitching",
+    label: "Pitching Stats",
+    description: "Essential metrics for evaluating pitcher performance",
+    stats: pitchingStats,
+  },
+  {
+    id: "hitting",
+    label: "Hitting Stats",
+    description: "Key statistics for measuring offensive production",
+    stats: hittingStats,
+  },
+  {
+    id: "defensive",
+    label: "Defensive Stats",
+    description: "Metrics for evaluating fielding performance and range",
+    stats: defensiveStats,
+  },
+];
 
 export default function Home() {
+  const [selectedCategory, setSelectedCategory] = useState<CategoryType>("pitching");
   const [expandedItems, setExpandedItems] = useState<Set<number>>(new Set());
+
+  const currentCategory = categories.find((cat) => cat.id === selectedCategory)!;
 
   const toggleItem = (index: number) => {
     const newExpanded = new Set(expandedItems);
@@ -16,18 +52,36 @@ export default function Home() {
     setExpandedItems(newExpanded);
   };
 
+  const handleCategoryChange = (newCategory: CategoryType) => {
+    setSelectedCategory(newCategory);
+    setExpandedItems(new Set()); // Reset expanded items when changing category
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center p-4 bg-white dark:bg-black">
       <div className="w-full max-w-2xl border border-gray-200 dark:border-gray-800 rounded-lg p-8 bg-white dark:bg-black shadow-sm">
-        <h1 className="text-3xl font-semibold mb-2 text-black dark:text-white">
-          Pitching Stats
-        </h1>
+        <div className="flex items-center justify-between mb-2">
+          <h1 className="text-3xl font-semibold text-black dark:text-white">
+            Baseball Stats
+          </h1>
+          <select
+            value={selectedCategory}
+            onChange={(e) => handleCategoryChange(e.target.value as CategoryType)}
+            className="px-3 py-2 text-sm border border-gray-200 dark:border-gray-800 rounded-md bg-white dark:bg-black text-black dark:text-white hover:bg-gray-50 dark:hover:bg-gray-900/50 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-gray-400 dark:focus:ring-gray-600"
+          >
+            {categories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.label}
+              </option>
+            ))}
+          </select>
+        </div>
         <p className="text-sm text-gray-600 dark:text-gray-400 mb-8">
-          Essential metrics for evaluating pitcher performance
+          {currentCategory.description}
         </p>
         
         <div className="space-y-0 border border-gray-200 dark:border-gray-800 rounded-md overflow-hidden">
-          {pitchingStats.map((stat, index) => (
+          {currentCategory.stats.map((stat, index) => (
             <div key={index} className="border-b border-gray-200 dark:border-gray-800 last:border-b-0">
               <button
                 onClick={() => toggleItem(index)}
