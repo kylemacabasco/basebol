@@ -1,40 +1,8 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { pitchingStats } from "./data/pitchingStats";
-import { hittingStats } from "./data/hittingStats";
-import { defensiveStats } from "./data/defensiveStats";
-import type { StatItem } from "./data/pitchingStats";
-
-type CategoryType = "pitching" | "hitting" | "defensive";
-
-interface Category {
-  id: CategoryType;
-  label: string;
-  description: string;
-  stats: StatItem[];
-}
-
-const categories: Category[] = [
-  {
-    id: "pitching",
-    label: "Pitching Stats",
-    description: "Essential metrics for evaluating pitcher performance",
-    stats: pitchingStats,
-  },
-  {
-    id: "hitting",
-    label: "Hitting Stats",
-    description: "Key statistics for measuring offensive production",
-    stats: hittingStats,
-  },
-  {
-    id: "defensive",
-    label: "Defensive Stats",
-    description: "Metrics for evaluating fielding performance and range",
-    stats: defensiveStats,
-  },
-];
+import { categories } from "./data/categories";
+import type { CategoryType } from "./data/categories";
 
 export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState<CategoryType>("pitching");
