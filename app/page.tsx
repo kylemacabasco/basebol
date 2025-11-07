@@ -123,8 +123,32 @@ export default function Home() {
                   expandedItems.has(index) ? "max-h-96" : "max-h-0"
                 }`}
               >
-                <div className="px-4 pb-4 text-sm text-gray-600 dark:text-gray-400 border-t border-gray-100 dark:border-gray-900 pt-3">
-                  {stat.definition}
+                <div className="px-4 pb-4 text-sm border-t border-gray-100 dark:border-gray-900 pt-3 space-y-3">
+                  <p className="text-gray-600 dark:text-gray-400">
+                    {stat.definition}
+                  </p>
+                  
+                  {stat.formula && (
+                    <div>
+                      <span className="text-xs font-semibold text-gray-600 dark:text-gray-500 uppercase tracking-wide">
+                        Formula
+                      </span>
+                      <p className="text-gray-600 dark:text-gray-400 mt-1 font-mono text-xs">
+                        {stat.formula}
+                      </p>
+                    </div>
+                  )}
+                  
+                  {stat.whatsBetter && (
+                    <div>
+                      <span className="text-xs font-semibold text-gray-600 dark:text-gray-500 uppercase tracking-wide">
+                        What's Better
+                      </span>
+                      <p className="text-gray-600 dark:text-gray-400 mt-1">
+                        {stat.whatsBetter}
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
