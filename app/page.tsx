@@ -149,6 +149,17 @@ export default function Home() {
                       </p>
                     </div>
                   )}
+                  
+                  {stat.example && (
+                    <div>
+                      <span className="text-xs font-semibold text-gray-600 dark:text-gray-500 uppercase tracking-wide">
+                        Example
+                      </span>
+                      <p className="text-gray-600 dark:text-gray-400 mt-1">
+                        {stat.example}
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
